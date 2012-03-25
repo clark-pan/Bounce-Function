@@ -55,7 +55,7 @@ function makeBounceFunction(timeBetweenBounces, bounceBackThreshold) {
 	//The easing function. x is a value between 0 and 1 representing how far into the animation it is.
 	return function (x) {
 		var i;
-		if (i === 1) {
+		if (x === 1) {
 			return 1;
 		}
 		for (i = 0; i <= numberOfBounces; i += 1) {
