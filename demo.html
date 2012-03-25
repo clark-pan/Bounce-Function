@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+		<title>index</title>
+		<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+		<script type="text/javascript" src="bounce-function.js"></script>
+		<script type="text/javascript">
+		$(document).ready(function() {
+			var counter = 0;
+			var bouncers = [];
+			var bounceFunctions = [];
+			var interval;
+			var framerate = 30, frames = 500;
+			for(var i = 0; i < 10; i++){
+				bouncers.push($("<div class='bouncer'></div>").appendTo($('#bounce-test')).css('left', (i) * 40));
+				bounceFunctions.push(makeBounceFunction((i + 1)/(i + 2)));
+			}
+			for(var i = 1; i < 10; i++){
+				$("<div class='line'></div>").css({
+					top : i * 50
+				}).appendTo($('#bounce-test'));
+			}
+			
+			startBounce();
+			
+			function onBounceInterval() {
+				var ratio = counter/frames;
+				for(var i = 0; i < bouncers.length; i++){
+					bouncers[i].css('top', bounceFunctions[i](ratio) * 490);
+				}
+				counter++;
+				if(counter > frames){
+					clearInterval(interval);
+					interval = null;
+					return;
+				}
+			}
+			
+			function startBounce(){
+				interval = setInterval(onBounceInterval, framerate);
+			}
+			$('#restart').click(function(){
+				if(interval) clearInterval(interval);
+				counter = 0;
+				framerate = parseInt($("#framerate").val()) || 30;
+				frames = parseInt($("#frames").val()) || 500;
+				startBounce();
+			});
+
+		});
+		</script>
+		<style type="text/css" media="screen">
+			body {
+				margin:0; padding:0;
+			}
+			#wrapper {
+				width:402px; margin:0 auto;
+			}
+			#bounce-test {
+				margin: 0 auto;
+				position:relative;
+				width:400px;
+				height:500px;
+				border:1px solid #000000;
+			}
+			.bouncer {
+				position:absolute;
+				width:10px;
+				height:10px;
+				border-radius:5px;
+				background-color:#000000;
+			}
+			.line {
+				height:1px; position:absolute; left:0; right:0; background:#999999; z-index:-1;
+			}
+			#framerate {
+				width:40px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="wrapper">
+			<p>Each of these bouncing balls has a different easing function applied to it, but have the same duration. They will all come to rest at the same time, but will bounce different amounts of time. From the left, the value that was passed into the first paramter of the bouncing function is 1/2, 2/3, 3/4 ... n/n+1.</p>
+			<p><label for="framerate">Frame Rate</label> <input type="text" value="30" id="framerate" /> <label for="framerate">Frames</label> <input type="text" value="500" id="frames" /> <input type="button" value="restart" id="restart" /></p>
+			<div id="bounce-test" class="gridlines"></div>
+		</div>
+	</body>
+</html>
