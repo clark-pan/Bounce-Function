@@ -11,8 +11,8 @@
 			var bouncers = [];
 			var bounceFunctions = [];
 			var interval;
-			var framerate = 30, frames = 500;
-			for(var i = 0; i < 10; i++){
+			var framerate = 30, frames = 200;
+			for(var i = 0; i < 5; i++){
 				bouncers.push($("<div class='bouncer'></div>").appendTo($('#bounce-test')).css('left', (i) * 40));
 				bounceFunctions.push(makeBounceFunction((i + 1)/(i + 2)));
 			}
@@ -79,9 +79,11 @@
 				height:10px;
 				border-radius:5px;
 				background-color:#000000;
-				opacity:0.3;
 			}
-			.bouncer.active {
+			#bounce-test:hover .bouncer {
+				opacity:0.1;
+			}
+			#bounce-test:hover .bouncer.active {
 				opacity:1;
 			}
 			.line {
