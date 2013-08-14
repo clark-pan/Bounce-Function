@@ -48,7 +48,7 @@
 				startBounce();
 			});
 			$('#bounce-test').on('mousemove', function(e){
-				var currentIndex = Math.floor(e.offsetX / ($(this).width()/bounces.length));
+				var currentIndex = Math.floor(e.offsetX / ($(this).width()/bouncers.length));
 				$.each(bouncers, function(i, bouncer){
 					if(i === currentIndex){
 						bouncer.addClass('active');
