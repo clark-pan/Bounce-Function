@@ -47,7 +47,16 @@
 				frames = parseInt($("#frames").val()) || 500;
 				startBounce();
 			});
-
+			$('#bounce-test').on('mousemove', function(e){
+				var currentIndex = Math.floor(e.offsetX / ($(this).width()/bounces.length));
+				$.each(bouncers, function(i, bouncer){
+					if(i === currentIndex){
+						bouncer.addClass('active');
+					} else {
+						bouncer.removeClass('active');
+					}
+				});
+			});
 		});
 		</script>
 		<style type="text/css" media="screen">
@@ -70,6 +79,10 @@
 				height:10px;
 				border-radius:5px;
 				background-color:#000000;
+				opacity:0.3;
+			}
+			.bouncer.active {
+				opacity:1;
 			}
 			.line {
 				height:1px; position:absolute; left:0; right:0; background:#999999; z-index:-1;
