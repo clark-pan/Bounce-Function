@@ -12,14 +12,17 @@
 			var bounceFunctions = [];
 			var interval;
 			var framerate = 30, frames = 200;
-			for(var i = 0; i < 5; i++){
-				bouncers.push($("<div class='bouncer'></div>").appendTo($('#bounce-test')).css('left', (i) * 40));
+			var num = 5;
+			var $wrapper = $('#bounce-test');
+			var space = $wrapper.width()/num;
+			for(var i = 0; i < num; i++){
+				bouncers.push($("<div class='bouncer'></div>").appendTo($wrapper).css('left', (i) * space));
 				bounceFunctions.push(makeBounceFunction((i + 1)/(i + 2)));
 			}
 			for(var i = 1; i < 10; i++){
 				$("<div class='line'></div>").css({
 					top : i * 50
-				}).appendTo($('#bounce-test'));
+				}).appendTo($wrapper);
 			}
 			
 			startBounce();
@@ -47,8 +50,8 @@
 				frames = parseInt($("#frames").val()) || 500;
 				startBounce();
 			});
-			$('#bounce-test').on('mousemove', function(e){
-				var currentIndex = Math.floor(e.offsetX / ($(this).width()/bouncers.length));
+			$wrapper.on('mousemove', function(e){
+				var currentIndex = Math.floor(e.offsetX / space);
 				$.each(bouncers, function(i, bouncer){
 					if(i === currentIndex){
 						bouncer.addClass('active');
